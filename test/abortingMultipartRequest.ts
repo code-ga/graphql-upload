@@ -1,6 +1,6 @@
 // @ts-check
 
-import { FormDataEncoder } from "form-data-encoder";
+import { FormDataEncoder, FormDataLike } from "form-data-encoder";
 import nodeAbortController from "node-abort-controller";
 import fetch, { AbortError } from "node-fetch";
 import { Readable } from "stream";
@@ -23,13 +23,13 @@ const textDecoder = new TextDecoder();
  * @returns {Promise<void>} Resolves once the request aborts.
  */
 export default async function abortingMultipartRequest(
-  url,
-  formData,
-  abortMarker,
-  requestReceived
+  url: string,
+  formData: FormData,
+  abortMarker:string,
+  requestReceived: Promise<void>
 ) {
   const abortController = new AbortController();
-  const encoder = new FormDataEncoder(formData);
+  const encoder = new FormDataEncoder(formData as unknown as FormDataLike);
 
   /**
    * An async generator to iterate the encoded chunks of the form data, that

@@ -26,24 +26,7 @@
     "esm",
     "mjs"
   ],
-  "files": [
-    "GRAPHQL_MULTIPART_REQUEST_SPEC_URL.mjs",
-    "GraphQLUpload.mjs",
-    "graphqlUploadExpress.mjs",
-    "graphqlUploadKoa.mjs",
-    "ignoreStream.mjs",
-    "processRequest.mjs",
-    "Upload.mjs"
-  ],
   "sideEffects": false,
-  "exports": {
-    "./GraphQLUpload.mjs": "./GraphQLUpload.mjs",
-    "./graphqlUploadExpress.mjs": "./graphqlUploadExpress.mjs",
-    "./graphqlUploadKoa.mjs": "./graphqlUploadKoa.mjs",
-    "./package.json": "./package.json",
-    "./processRequest.mjs": "./processRequest.mjs",
-    "./Upload.mjs": "./Upload.mjs"
-  },
   "engines": {
     "node": "^14.17.0 || ^16.0.0 || >= 18.0.0"
   },
@@ -88,9 +71,10 @@
   "scripts": {
     "eslint": "eslint .",
     "prettier": "prettier -c .",
-    "types": "tsc -p jsconfig.json",
-    "tests": "coverage-node --unhandled-rejections=throw test.mjs",
+    "types": "tsc -p tsconfig.json",
+    "tests": "coverage-node --unhandled-rejections=throw ./test/test.ts",
     "test": "npm run eslint && npm run prettier && npm run types && npm run tests",
     "prepublishOnly": "npm test"
-  }
+  },
+  "type": "module"
 }

@@ -1,15 +1,18 @@
 // @ts-check
 
 import busboy from "busboy";
-import { WriteStream } from "fs-capacitor";
+import { ReadStreamOptions, WriteStream } from "fs-capacitor";
 import createError from "http-errors";
 import objectPath from "object-path";
 
-import GRAPHQL_MULTIPART_REQUEST_SPEC_URL from "./GRAPHQL_MULTIPART_REQUEST_SPEC_URL.mjs";
-import ignoreStream from "./ignoreStream.mjs";
-import Upload from "./Upload.mjs";
+import GRAPHQL_MULTIPART_REQUEST_SPEC_URL from "./GRAPHQL_MULTIPART_REQUEST_SPEC_URL.js";
+import ignoreStream from "./ignoreStream.js";
+import Upload from "./Upload.js";
+import type { ObjectPathBound } from "object-path";
+import { Request, Response } from "express"
+import { IncomingMessage, ServerResponse } from "http";
 
-/** @typedef {import("./GraphQLUpload.mjs").default} GraphQLUpload */
+/** @typedef {import("./GraphQLUpload").default} GraphQLUpload */
 
 /**
  * Processes an incoming
@@ -23,8 +26,8 @@ import Upload from "./Upload.mjs";
  * @type {ProcessRequestFunction}
  */
 export default function processRequest(
-  request,
-  response,
+  request: Request|IncomingMessage,
+  response: Response | ServerResponse,
   {
     maxFieldSize = 1000000, // 1 MB
     maxFileSize = Infinity,
@@ -33,27 +36,31 @@ export default function processRequest(
 ) {
   return new Promise((resolve, reject) => {
     /** @type {boolean} */
-    let released;
+    let released: boolean;
 
     /** @type {Error} */
-    let exitError;
+    let exitError: Error;
 
     /**
      * @type {{ [key: string]: unknown } | Array<
      *   { [key: string]: unknown }
      * >}
      */
-    let operations;
+    let operations:
+      | { [key: string]: unknown }
+      | Array<{ [key: string]: unknown }>;
 
     /**
      * @type {import("object-path").ObjectPathBound<
      *   { [key: string]: unknown } | Array<{ [key: string]: unknown }>
      * >}
      */
-    let operationsPath;
+    let operationsPath: ObjectPathBound<
+      { [key: string]: unknown } | Array<{ [key: string]: unknown }>
+    >;
 
     /** @type {Map<string, Upload>} */
-    let map;
+    let map: Map<string, Upload>;
 
     const parser = busboy({
       headers: request.headers,
@@ -71,7 +78,7 @@ export default function processRequest(
      * @param {Error} error Error instance.
      * @param {boolean} [isParserError] Is the error from the parser.
      */
-    function exit(error, isParserError = false) {
+    function exit(error: Error, isParserError = false) {
       if (exitError) return;
 
       exitError = error;
@@ -236,7 +243,7 @@ export default function processRequest(
         }
 
         /** @type {Error} */
-        let fileError;
+        let fileError: Error;
 
         const capacitor = new WriteStream();
 
@@ -265,7 +272,7 @@ export default function processRequest(
           filename,
           mimetype,
           encoding,
-          createReadStream(options) {
+          createReadStream(options: ReadStreamOptions | undefined) {
             const error = fileError || (released ? exitError : null);
             if (error) throw error;
             return capacitor.createReadStream(options);
@@ -317,8 +324,8 @@ export default function processRequest(
     // could have multiple `error` events and all must be handled to prevent the
     // Node.js process exiting with an error. One edge case is if there is a
     // malformed part header as well as an unexpected end of the form.
-    parser.on("error", (/** @type {Error} */ error) => {
-      exit(error, true);
+    parser.on("error", (error: Error) => {
+      return exit(error, true);
     });
 
     response.once("close", () => {
@@ -402,7 +409,8 @@ export default function processRequest(
  * @param {import("http").IncomingMessage} request
  *   [Node.js HTTP server request instance](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
  * @param {import("http").ServerResponse} response
- *   [Node.js HTTP server response instance](https://nodejs.org/api/http.html#http_class_http_serverresponse).
+ *   [Node.import { express } from 'express';
+js HTTP server response instance](https://nodejs.org/api/http.html#http_class_http_serverresponse).
  * @param {ProcessRequestOptions} [options] Options.
  * @returns {Promise<
  *   { [key: string]: unknown } | Array<{ [key: string]: unknown }>

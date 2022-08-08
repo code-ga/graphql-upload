@@ -12,18 +12,18 @@ import { ReadStream } from "fs-capacitor";
 import { createServer } from "http";
 import fetch, { File, FormData } from "node-fetch";
 
-import processRequest from "./processRequest.mjs";
-import abortingMultipartRequest from "./test/abortingMultipartRequest.mjs";
-import Deferred from "./test/Deferred.mjs";
-import listen from "./test/listen.mjs";
-import streamToString from "./test/streamToString.mjs";
-import Upload from "./Upload.mjs";
+import processRequest from "./../src/processRequest";
+import abortingMultipartRequest from "./abortingMultipartRequest";
+import Deferred from "./Deferred";
+import listen from "./listen";
+import streamToString from "./streamToString";
+import Upload from "./../src/Upload";
 
 /**
  * Adds `processRequest` tests.
- * @param {import("test-director").default} tests Test director.
+ * @param {import("./testClass").default} tests Test director.
  */
-export default (tests) => {
+export default (tests: import("./testClass").default) => {
   tests.add("`processRequest` with no files.", async () => {
     let serverError;
 
@@ -61,15 +61,15 @@ export default (tests) => {
 
       const server = createServer(async (request, response) => {
         try {
-          const operation =
-            /**
-             * @type {{
-             *   variables: {
-             *     file: Upload,
-             *   },
-             * }}
-             */
-            (await processRequest(request, response));
+          const operation: {
+            variables: {
+              file: Upload;
+            };
+          } = (await processRequest(request, response)) as {
+            variables: {
+              file: Upload;
+            };
+          };
 
           ok(operation.variables.file instanceof Upload);
 
@@ -122,15 +122,15 @@ export default (tests) => {
 
       const server = createServer(async (request, response) => {
         try {
-          const operation =
-            /**
-             * @type {{
-             *   variables: {
-             *     file: Upload,
-             *   },
-             * }}
-             */
-            (await processRequest(request, response));
+          const operation: {
+            variables: {
+              file: Upload;
+            };
+          } = (await processRequest(request, response)) as {
+            variables: {
+              file: Upload;
+            };
+          };
 
           ok(operation.variables.file instanceof Upload);
 
@@ -181,15 +181,15 @@ export default (tests) => {
 
       const server = createServer(async (request, response) => {
         try {
-          const operation =
-            /**
-             * @type {{
-             *   variables: {
-             *     file: Upload,
-             *   },
-             * }}
-             */
-            (await processRequest(request, response));
+          const operation: {
+            variables: {
+              file: Upload;
+            };
+          } = (await processRequest(request, response)) as {
+            variables: {
+              file: Upload;
+            };
+          };
 
           ok(operation.variables.file instanceof Upload);
 
@@ -243,15 +243,11 @@ export default (tests) => {
 
     const server = createServer(async (request, response) => {
       try {
-        const operations =
-          /**
-           * @type {Array<{
-           *   variables: {
-           *     file: Upload,
-           *   },
-           * }>}
-           */
-          (await processRequest(request, response));
+        const operations = (await processRequest(request, response)) as Array<{
+          variables: {
+            file: Upload;
+          };
+        }>;
 
         ok(operations[0].variables.file instanceof Upload);
 
@@ -317,15 +313,11 @@ export default (tests) => {
 
     const server = createServer(async (request, response) => {
       try {
-        const operation =
-          /**
-           * @type {{
-           *   variables: {
-           *     files: Array<Upload>,
-           *   },
-           * }}
-           */
-          (await processRequest(request, response));
+        const operation = (await processRequest(request, response)) as {
+          variables: {
+            files: Array<Upload>;
+          };
+        };
 
         ok(operation.variables.files[0] instanceof Upload);
         ok(operation.variables.files[1] instanceof Upload);
@@ -390,16 +382,12 @@ export default (tests) => {
 
     const server = createServer(async (request, response) => {
       try {
-        const operation =
-          /**
-           * @type {{
-           *   variables: {
-           *     fileA: Upload,
-           *     fileB: Upload,
-           *   },
-           * }}
-           */
-          (await processRequest(request, response));
+        const operation = (await processRequest(request, response)) as {
+          variables: {
+            fileA: Upload;
+            fileB: Upload;
+          };
+        };
 
         ok(operation.variables.fileB instanceof Upload);
 
@@ -445,16 +433,11 @@ export default (tests) => {
 
       const server = createServer(async (request, response) => {
         try {
-          const operation =
-            /**
-             * @type {{
-             *   variables: {
-             *     file: Upload,
-             *   },
-             * }}
-             */
-            (await processRequest(request, response));
-
+          const operation = (await processRequest(request, response)) as {
+            variables: {
+              file: Upload;
+            };
+          };
           ok(operation.variables.file instanceof Upload);
 
           const upload = await operation.variables.file.promise;
@@ -503,15 +486,11 @@ export default (tests) => {
 
       const server = createServer(async (request, response) => {
         try {
-          const operation =
-            /**
-             * @type {{
-             *   variables: {
-             *     file: Upload,
-             *   },
-             * }}
-             */
-            (await processRequest(request, response));
+          const operation = (await processRequest(request, response)) as {
+            variables: {
+              file: Upload;
+            };
+          };
 
           ok(operation.variables.file instanceof Upload);
           await rejects(operation.variables.file.promise, {
@@ -599,15 +578,13 @@ export default (tests) => {
 
       const server = createServer(async (request, response) => {
         try {
-          const operation =
-            /**
-             * @type {{
-             *   variables: {
-             *     files: Array<Upload>,
-             *   },
-             * }}
-             */
-            (await processRequest(request, response, { maxFiles: 2 }));
+          const operation = (await processRequest(request, response, {
+            maxFiles: 2,
+          })) as {
+            variables: {
+              files: Array<Upload>;
+            };
+          };
 
           ok(operation.variables.files[0] instanceof Upload);
 
@@ -672,21 +649,15 @@ export default (tests) => {
 
     const server = createServer(async (request, response) => {
       try {
-        const operation =
-          /**
-           * @type {{
-           *   variables: {
-           *     files: Array<Upload>,
-           *   },
-           * }}
-           */
-          (
-            await processRequest(request, response, {
-              // Todo: Change this back to 1 once this `busboy` bug is fixed:
-              // https://github.com/mscdex/busboy/issues/297
-              maxFileSize: 2,
-            })
-          );
+        const operation = (await processRequest(request, response, {
+          // Todo: Change this back to 1 once this `busboy` bug is fixed:
+          // https://github.com/mscdex/busboy/issues/297
+          maxFileSize: 2,
+        })) as {
+          variables: {
+            files: Array<Upload>;
+          };
+        };
 
         ok(operation.variables.files[0] instanceof Upload);
 
@@ -806,17 +777,13 @@ export default (tests) => {
         try {
           requestReceived.resolve();
 
-          const operation =
-            /**
-             * @type {{
-             *   variables: {
-             *     fileA: Upload,
-             *     fileB: Upload,
-             *     fileC: Upload,
-             *   },
-             * }}
-             */
-            (await processRequest(request, response));
+          const operation = (await processRequest(request, response)) as {
+            variables: {
+              fileA: Upload;
+              fileB: Upload;
+              fileC: Upload;
+            };
+          };
 
           const testUploadA = async () => {
             ok(operation.variables.fileA instanceof Upload);
@@ -919,7 +886,7 @@ export default (tests) => {
           `http://localhost:${port}`,
           formData,
           abortMarker,
-          requestReceived.promise
+          requestReceived.promise as Promise<void>
         );
 
         await done.promise;
@@ -951,17 +918,13 @@ export default (tests) => {
         try {
           requestReceived.resolve();
 
-          const operation =
-            /**
-             * @type {{
-             *   variables: {
-             *     fileA: Upload,
-             *     fileB: Upload,
-             *     fileC: Upload,
-             *   },
-             * }}
-             */
-            (await processRequest(request, response));
+          const operation = (await processRequest(request, response)) as {
+            variables: {
+              fileA: Upload;
+              fileB: Upload;
+              fileC: Upload;
+            };
+          };
 
           // Wait for the request parsing to finish.
           await new Promise((resolve) => {
@@ -1063,7 +1026,7 @@ export default (tests) => {
           `http://localhost:${port}`,
           formData,
           abortMarker,
-          requestReceived.promise
+          requestReceived.promise as Promise<void>
         );
 
         await done.promise;

@@ -5,6 +5,9 @@
  * @template [Resolves=void] What the promise resolves.
  */
 export default class Deferred {
+  promise: Promise<unknown>;
+  resolve: (value?: unknown) => void;
+  reject: (reason?: any) => void;
   constructor() {
     /** The promise. */
     this.promise = /** @type {Promise<Resolves>} */ (

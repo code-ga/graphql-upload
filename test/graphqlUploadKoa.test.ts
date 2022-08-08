@@ -5,15 +5,15 @@ import { createServer } from "http";
 import Koa from "koa";
 import fetch, { File, FormData } from "node-fetch";
 
-import graphqlUploadKoa from "./graphqlUploadKoa.mjs";
-import processRequest from "./processRequest.mjs";
-import listen from "./test/listen.mjs";
+import graphqlUploadKoa from "./../src/graphqlUploadKoa";
+import processRequest from "./../src/processRequest";
+import listen from "./listen";
 
 /**
  * Adds `graphqlUploadKoa` tests.
- * @param {import("test-director").default} tests Test director.
+ * @param {import("./testClass").default} tests Test director.
  */
-export default (tests) => {
+export default (tests: import("./testClass").default) => {
   tests.add("`graphqlUploadKoa` with a non multipart request.", async () => {
     let processRequestRan = false;
 
@@ -40,11 +40,17 @@ export default (tests) => {
     /**
      * @type {{
      *   variables: {
-     *     file: import("./Upload.mjs").default,
+     *     file: import("./../src/Upload").default,
      *   },
      * } | undefined}
      */
-    let ctxRequestBody;
+    let ctxRequestBody:
+      | {
+          variables: {
+            file: import("./../src/Upload").default;
+          };
+        }
+      | undefined;
 
     const app = new Koa().use(graphqlUploadKoa()).use(async (ctx, next) => {
       ctxRequestBody =
@@ -84,7 +90,13 @@ export default (tests) => {
        *   },
        * } | undefined}
        */
-      let ctxRequestBody;
+      let ctxRequestBody:
+        | {
+            variables: {
+              file: import("./../src/Upload").default;
+            };
+          }
+        | undefined;
 
       const app = new Koa()
         .use(

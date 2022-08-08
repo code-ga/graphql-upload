@@ -3,14 +3,14 @@
 import { doesNotThrow, throws } from "assert";
 import { parseValue } from "graphql";
 
-import GraphQLUpload from "./GraphQLUpload.mjs";
-import Upload from "./Upload.mjs";
-
+import GraphQLUpload from "./../src/GraphQLUpload";
+import Upload from "./../src/Upload";
+import TestDirector from "./testClass";
 /**
  * Adds `GraphQLUpload` tests.
- * @param {import("test-director").default} tests Test director.
+ * @param {import("./testClass").default} tests Test director.
  */
-export default (tests) => {
+export default (tests: TestDirector) => {
   tests.add("`GraphQLUpload` scalar `parseValue` with a valid value.", () => {
     doesNotThrow(() => {
       GraphQLUpload.parseValue(new Upload());

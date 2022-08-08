@@ -1,6 +1,6 @@
 // @ts-check
 
-/** @typedef {import("./GraphQLUpload.mjs").default} GraphQLUpload */
+/** @typedef {import("./GraphQLUpload.js").default} GraphQLUpload */
 /** @typedef {import("./processRequest.mjs").default} processRequest */
 
 /**
@@ -11,6 +11,10 @@
  * {@linkcode GraphQLUpload} derives it’s value from {@linkcode Upload.promise}.
  */
 export default class Upload {
+  promise: Promise<any>;
+  resolve!: (file /** @typedef {import("./GraphQLUpload.js").default} GraphQLUpload */: any) => void;
+  file: any;
+  reject!: (reason?: any) => void;
   constructor() {
     /**
      * Promise that resolves file upload details. This should only be utilized

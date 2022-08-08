@@ -1,7 +1,7 @@
 // @ts-check
 
-import defaultProcessRequest from "./processRequest.mjs";
-
+import defaultProcessRequest from "./processRequest.js";
+import express from "express";
 /**
  * Creates [Express](https://expressjs.com) middleware that processes incoming
  * [GraphQL multipart requests](https://github.com/jaydenseric/graphql-multipart-request-spec)
@@ -45,7 +45,11 @@ export default function graphqlUploadExpress({
    * @param {import("express").Response} response
    * @param {import("express").NextFunction} next
    */
-  function graphqlUploadExpressMiddleware(request, response, next) {
+  function graphqlUploadExpressMiddleware(
+    request: express.Request,
+    response: express.Response,
+    next: express.NextFunction
+  ) {
     if (!request.is("multipart/form-data")) return next();
 
     const requestEnd = new Promise((resolve) => request.on("end", resolve));

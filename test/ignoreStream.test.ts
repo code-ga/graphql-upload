@@ -2,14 +2,14 @@
 
 import { doesNotThrow, strictEqual } from "assert";
 
-import ignoreStream from "./ignoreStream.mjs";
-import CountReadableStream from "./test/CountReadableStream.mjs";
+import ignoreStream from "../src/ignoreStream.js";
+import CountReadableStream from "./CountReadableStream";
 
 /**
  * Adds `ignoreStream` tests.
- * @param {import("test-director").default} tests Test director.
+ * @param {import("./testClass").default} tests Test director.
  */
-export default (tests) => {
+export default (tests: import("./testClass").default) => {
   tests.add("`ignoreStream` ignores errors.", () => {
     doesNotThrow(() => {
       const stream = new CountReadableStream();

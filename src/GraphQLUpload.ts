@@ -2,9 +2,9 @@
 
 import { GraphQLError, GraphQLScalarType } from "graphql";
 
-import Upload from "./Upload.mjs";
+import Upload from "./Upload";
 
-/** @typedef {import("./processRequest.mjs").FileUpload} FileUpload */
+/** @typedef {import("./processRequest").FileUpload} FileUpload */
 
 /**
  * A GraphQL `Upload` scalar that can be used in a

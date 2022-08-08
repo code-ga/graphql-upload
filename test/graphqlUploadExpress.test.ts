@@ -6,15 +6,16 @@ import { createServer } from "http";
 import createError from "http-errors";
 import fetch, { File, FormData } from "node-fetch";
 
-import graphqlUploadExpress from "./graphqlUploadExpress.mjs";
-import processRequest from "./processRequest.mjs";
-import listen from "./test/listen.mjs";
+import graphqlUploadExpress from "./../src/graphqlUploadExpress";
+import processRequest from "./../src/processRequest";
+import listen from "./listen";
+import TestDirector from "./testClass";
 
 /**
  * Adds `graphqlUploadExpress` tests.
- * @param {import("test-director").default} tests Test director.
+ * @param {import("./testClass").default} tests Test director.
  */
-export default (tests) => {
+export default (tests: TestDirector) => {
   tests.add(
     "`graphqlUploadExpress` with a non multipart request.",
     async () => {
@@ -44,15 +45,21 @@ export default (tests) => {
     /**
      * @type {{
      *   variables: {
-     *     file: import("./Upload.mjs").default,
+     *     file: import("./../src/Upload").default,
      *   },
      * } | undefined}
      */
-    let requestBody;
+    let requestBody:
+      | {
+          variables: {
+            file: import("./../src/Upload").default;
+          };
+        }
+      | undefined;
 
     const app = express()
       .use(graphqlUploadExpress())
-      .use((request, response, next) => {
+      .use((request, _response, next) => {
         requestBody = request.body;
         next();
       });
@@ -84,11 +91,17 @@ export default (tests) => {
       /**
        * @type {{
        *   variables: {
-       *     file: import("./Upload.mjs").default,
+       *     file: import("./../src/Upload").default,
        *   },
        * } | undefined}
        */
-      let requestBody;
+      let requestBody:
+        | {
+            variables: {
+              file: import("./../src/Upload").default;
+            };
+          }
+        | undefined;
 
       const app = express()
         .use(
@@ -99,7 +112,7 @@ export default (tests) => {
             },
           })
         )
-        .use((request, response, next) => {
+        .use((request, _response, next) => {
           requestBody = request.body;
           next();
         });
@@ -164,7 +177,12 @@ export default (tests) => {
            * @param {import("express").Response} response
            * @param {import("express").NextFunction} next
            */
-          (error, request, response, next) => {
+          (
+            error: Error,
+            _request: express.Request,
+            response: express.Response,
+            next: express.NextFunction
+          ) => {
             expressError = error;
             responseStatusCode = response.statusCode;
 
@@ -233,7 +251,12 @@ export default (tests) => {
            * @param {import("express").Response} response
            * @param {import("express").NextFunction} next
            */
-          (error, request, response, next) => {
+          (
+            error: Error,
+            _request: express.Request,
+            response: express.Response,
+            next: express.NextFunction
+          ) => {
             expressError = error;
 
             // Sending a response here prevents the default Express error handler
