@@ -2,12 +2,12 @@
 
 import TestDirector from "./testClass";
 
-import test_GraphQLUpload from "./GraphQLUpload.test.js";
-import test_graphqlUploadExpress from "./graphqlUploadExpress.test.js";
-import test_graphqlUploadKoa from "./graphqlUploadKoa.test.js";
-import test_ignoreStream from "./ignoreStream.test.js";
-import test_processRequest from "./processRequest.test.js";
-import test_Upload from "./Upload.test.js";
+import test_GraphQLUpload from "./GraphQLUpload.test";
+import test_graphqlUploadExpress from "./graphqlUploadExpress.test";
+import test_graphqlUploadKoa from "./graphqlUploadKoa.test";
+import test_ignoreStream from "./ignoreStream.test";
+import test_processRequest from "./processRequest.test";
+import test_Upload from "./Upload.test";
 
 const tests = new TestDirector();
 

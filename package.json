@@ -75,6 +75,5 @@
     "tests": "coverage-node --unhandled-rejections=throw ./test/test.ts",
     "test": "npm run eslint && npm run prettier && npm run types && npm run tests",
     "prepublishOnly": "npm test"
-  },
-  "type": "module"
+  },"type": "module"
 }
