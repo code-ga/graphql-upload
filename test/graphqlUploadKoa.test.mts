@@ -5,38 +5,41 @@ import { createServer } from "http";
 import Koa from "koa";
 import fetch, { File, FormData } from "node-fetch";
 
-import graphqlUploadKoa from "./../src/graphqlUploadKoa";
-import processRequest from "./../src/processRequest";
-import listen from "./listen";
+import graphqlUploadKoa from "../src/graphqlUploadKoa.mjs";
+import processRequest from "../src/processRequest.mjs";
+import listen from "./listen.mjs";
 
 /**
  * Adds `graphqlUploadKoa` tests.
  * @param {import("./testClass").default} tests Test director.
  */
-export default (tests: import("./testClass").default) => {
-  tests.add("`graphqlUploadKoa` with a non multipart request.", async () => {
-    let processRequestRan = false;
+export default async (tests: import("./testClass.mjs").default) => {
+  await tests.add(
+    "`graphqlUploadKoa` with a non multipart request.",
+    async () => {
+      let processRequestRan = false;
 
-    const app = new Koa().use(
-      graphqlUploadKoa({
-        /** @type {any} */
-        async processRequest() {
-          processRequestRan = true;
-        },
-      })
-    );
+      const app = new Koa().use(
+        graphqlUploadKoa({
+          /** @type {any} */
+          async processRequest() {
+            processRequestRan = true;
+          },
+        })
+      );
 
-    const { port, close } = await listen(createServer(app.callback()));
+      const { port, close } = await listen(createServer(app.callback()));
 
-    try {
-      await fetch(`http://localhost:${port}`, { method: "POST" });
-      strictEqual(processRequestRan, false);
-    } finally {
-      close();
+      try {
+        await fetch(`http://localhost:${port}`, { method: "POST" });
+        strictEqual(processRequestRan, false);
+      } finally {
+        close();
+      }
     }
-  });
+  );
 
-  tests.add("`graphqlUploadKoa` with a multipart request.", async () => {
+  await tests.add("`graphqlUploadKoa` with a multipart request.", async () => {
     /**
      * @type {{
      *   variables: {
@@ -47,7 +50,7 @@ export default (tests: import("./testClass").default) => {
     let ctxRequestBody:
       | {
           variables: {
-            file: import("./../src/Upload").default;
+            file: import("../src/Upload.mjs").default;
           };
         }
       | undefined;
@@ -78,7 +81,7 @@ export default (tests: import("./testClass").default) => {
     }
   });
 
-  tests.add(
+  await tests.add(
     "`graphqlUploadKoa` with a multipart request and option `processRequest`.",
     async () => {
       let processRequestRan = false;
@@ -93,7 +96,7 @@ export default (tests: import("./testClass").default) => {
       let ctxRequestBody:
         | {
             variables: {
-              file: import("./../src/Upload").default;
+              file: import("../src/Upload.mjs").default;
             };
           }
         | undefined;
@@ -138,7 +141,7 @@ export default (tests: import("./testClass").default) => {
     }
   );
 
-  tests.add(
+  await tests.add(
     "`graphqlUploadKoa` with a multipart request and option `processRequest` throwing an error.",
     async () => {
       let koaError;
@@ -190,7 +193,7 @@ export default (tests: import("./testClass").default) => {
     }
   );
 
-  tests.add(
+  await tests.add(
     "`graphqlUploadKoa` with a multipart request and following middleware throwing an error.",
     async () => {
       let koaError;

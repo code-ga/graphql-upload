@@ -1,6 +1,6 @@
 // @ts-check
 
-import defaultProcessRequest from "./processRequest.js";
+import defaultProcessRequest from "./processRequest.mjs";
 import express from "express";
 /**
  * Creates [Express](https://expressjs.com) middleware that processes incoming

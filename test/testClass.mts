@@ -51,9 +51,9 @@ export default class TestDirector {
    * tests.run();
    * ```
    */
-  add(name: string, test: () => any) {
-    if (this.tests.has(name))
-      throw new Error(`A test called \`${name}\` has already been added.`);
+  async add(name: string, test: () => any) {
+    // if (this.tests.has(name))
+    //   throw new Error(`A test called \`${name}\` has already been added.`);
 
     this.tests.set(name, test);
   }

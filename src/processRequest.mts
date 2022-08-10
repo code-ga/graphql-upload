@@ -1,16 +1,16 @@
 // @ts-check
 
 import busboy from "busboy";
-import { ReadStreamOptions, WriteStream } from "fs-capacitor";
 import createError from "http-errors";
 import objectPath from "object-path";
 
-import GRAPHQL_MULTIPART_REQUEST_SPEC_URL from "./GRAPHQL_MULTIPART_REQUEST_SPEC_URL.js";
-import ignoreStream from "./ignoreStream.js";
-import Upload from "./Upload.js";
+import GRAPHQL_MULTIPART_REQUEST_SPEC_URL from "./GRAPHQL_MULTIPART_REQUEST_SPEC_URL.mjs";
+import ignoreStream from "./ignoreStream.mjs";
+import Upload from "./Upload.mjs";
 import type { ObjectPathBound } from "object-path";
-import { Request, Response } from "express"
+import { Request, Response } from "express";
 import { IncomingMessage, ServerResponse } from "http";
+import { WriteStream } from "fs-capacitor";
 
 /** @typedef {import("./GraphQLUpload").default} GraphQLUpload */
 
@@ -25,8 +25,8 @@ import { IncomingMessage, ServerResponse } from "http";
  * with appropriate HTTP status codes. Used to create custom middleware.
  * @type {ProcessRequestFunction}
  */
-export default function processRequest(
-  request: Request|IncomingMessage,
+export default async function processRequest(
+  request: Request | IncomingMessage,
   response: Response | ServerResponse,
   {
     maxFieldSize = 1000000, // 1 MB
@@ -215,7 +215,7 @@ export default function processRequest(
             }
           }
 
-          resolve(operations);
+          resolve(operations as any);
         }
       }
     });
@@ -272,7 +272,9 @@ export default function processRequest(
           filename,
           mimetype,
           encoding,
-          createReadStream(options: ReadStreamOptions | undefined) {
+          createReadStream(
+            options: import("fs-capacitor").ReadStreamOptions | undefined
+          ) {
             const error = fileError || (released ? exitError : null);
             if (error) throw error;
             return capacitor.createReadStream(options);

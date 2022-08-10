@@ -12,18 +12,18 @@ import { ReadStream } from "fs-capacitor";
 import { createServer } from "http";
 import fetch, { File, FormData } from "node-fetch";
 
-import processRequest from "./../src/processRequest";
-import abortingMultipartRequest from "./abortingMultipartRequest";
-import Deferred from "./Deferred";
-import listen from "./listen";
-import streamToString from "./streamToString";
-import Upload from "./../src/Upload";
+import processRequest from "../src/processRequest.mjs";
+import abortingMultipartRequest from "./abortingMultipartRequest.mjs";
+import Deferred from "./Deferred.mjs";
+import listen from "./listen.mjs";
+import streamToString from "./streamToString.mjs";
+import Upload from "../src/Upload.mjs";
 
 /**
  * Adds `processRequest` tests.
  * @param {import("./testClass").default} tests Test director.
  */
-export default (tests: import("./testClass").default) => {
+export default (tests: import("./testClass.mjs").default) => {
   tests.add("`processRequest` with no files.", async () => {
     let serverError;
 

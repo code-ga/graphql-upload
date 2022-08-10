@@ -3,12 +3,8 @@
   "version": "16.0.1",
   "description": "Middleware and an Upload scalar to add support for GraphQL multipart requests (file uploads via queries and mutations) to various Node.js GraphQL servers.",
   "license": "MIT",
-  "author": {
-    "name": "Jayden Seric",
-    "email": "me@jaydenseric.com",
-    "url": "https://jaydenseric.com"
-  },
-  "repository": "github:jaydenseric/graphql-upload",
+  "author": "Jayden Seric <me@jaydenseric.com> (https://jaydenseric.com)",
+  "repository": "https://github.com/github:jaydenseric/graphql-upload",
   "homepage": "https://github.com/jaydenseric/graphql-upload#readme",
   "bugs": "https://github.com/jaydenseric/graphql-upload/issues",
   "funding": "https://github.com/sponsors/jaydenseric",
@@ -50,6 +46,7 @@
     "busboy": "^1.6.0",
     "fs-capacitor": "^8.0.0",
     "http-errors": "^2.0.0",
+    "node-fetch": "^3.2.10",
     "object-path": "^0.11.8"
   },
   "devDependencies": {
@@ -63,7 +60,6 @@
     "graphql": "^16.5.0",
     "koa": "^2.13.4",
     "node-abort-controller": "^3.0.1",
-    "node-fetch": "^3.2.9",
     "prettier": "^2.6.2",
     "test-director": "^8.0.2",
     "typescript": "^4.7.4"
@@ -75,5 +71,12 @@
     "tests": "coverage-node --unhandled-rejections=throw ./test/test.ts",
     "test": "npm run eslint && npm run prettier && npm run types && npm run tests",
     "prepublishOnly": "npm test"
-  },"type": "module"
+  },
+  "files": [
+    "dist/src"
+  ],
+  "main": "dist/src/index.js",
+  "module": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
+  "types": "dist/src/index.d.ts"
 }

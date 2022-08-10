@@ -1,6 +1,6 @@
 // @ts-check
 
-import defaultProcessRequest from "./processRequest.js";
+import defaultProcessRequest from "./processRequest.mjs";
 import type { ParameterizedContext } from "koa";
 
 /**

@@ -3,9 +3,9 @@
 import { doesNotThrow, throws } from "assert";
 import { parseValue } from "graphql";
 
-import GraphQLUpload from "./../src/GraphQLUpload";
-import Upload from "./../src/Upload";
-import TestDirector from "./testClass";
+import GraphQLUpload from "../src/GraphQLUpload.mjs";
+import Upload from "../src/Upload.mjs";
+import TestDirector from "./testClass.mjs";
 /**
  * Adds `GraphQLUpload` tests.
  * @param {import("./testClass").default} tests Test director.

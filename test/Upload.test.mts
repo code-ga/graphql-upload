@@ -2,13 +2,13 @@
 
 import { ok, rejects, strictEqual } from "assert";
 
-import Upload from "./../src/Upload";
+import Upload from "../src/Upload.mjs";
 
 /**
  * Adds `Upload` tests.
  * @param {import("./testClass").default} tests Test director.
  */
-export default (tests: import("./testClass").default) => {
+export default (tests: import("./testClass.mjs").default) => {
   tests.add("`Upload` class resolving a file.", async () => {
     const upload = new Upload();
 

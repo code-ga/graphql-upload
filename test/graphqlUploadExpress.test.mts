@@ -6,10 +6,10 @@ import { createServer } from "http";
 import createError from "http-errors";
 import fetch, { File, FormData } from "node-fetch";
 
-import graphqlUploadExpress from "./../src/graphqlUploadExpress";
-import processRequest from "./../src/processRequest";
-import listen from "./listen";
-import TestDirector from "./testClass";
+import graphqlUploadExpress from "../src/graphqlUploadExpress.mjs";
+import processRequest from "../src/processRequest.mjs";
+import listen from "./listen.mjs";
+import TestDirector from "./testClass.mjs";
 
 /**
  * Adds `graphqlUploadExpress` tests.
@@ -52,7 +52,7 @@ export default (tests: TestDirector) => {
     let requestBody:
       | {
           variables: {
-            file: import("./../src/Upload").default;
+            file: import("../src/Upload.mjs").default;
           };
         }
       | undefined;
@@ -98,7 +98,7 @@ export default (tests: TestDirector) => {
       let requestBody:
         | {
             variables: {
-              file: import("./../src/Upload").default;
+              file: import("../src/Upload.mjs").default;
             };
           }
         | undefined;
