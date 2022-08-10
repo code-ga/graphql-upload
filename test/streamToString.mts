@@ -1,6 +1,6 @@
 // @ts-check
 
-import { Readable } from "stream";
+import {Readable} from 'stream'
 
 /**
  * Converts a Node.js readable stream to a string.
@@ -8,13 +8,13 @@ import { Readable } from "stream";
  * @returns {Promise<string>} Resolves the final string.
  */
 export default function streamToString(stream: Readable) {
-  return new Promise((resolve, reject) => {
-    let data = "";
-    stream
-      .on("error", reject)
-      .on("data", (chunk) => {
-        data += chunk;
-      })
-      .on("end", () => resolve(data));
-  });
+	return new Promise((resolve, reject) => {
+		let data = ''
+		stream
+			.on('error', reject)
+			.on('data', (chunk) => {
+				data += chunk
+			})
+			.on('end', () => resolve(data))
+	})
 }

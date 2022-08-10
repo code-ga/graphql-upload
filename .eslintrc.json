@@ -1,30 +1,30 @@
 {
-  "extends": ["eslint:recommended"],
-  "env": {
-    "es2022": true,
-    "node": true
-  },
-  "parserOptions": {
-    "ecmaVersion": "latest"
-  },
-  "plugins": ["simple-import-sort"],
-  "rules": {
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
-  },
-  "overrides": [
-    {
-      "files": ["*.ts", "*.js"],
-      "parserOptions": {
-        "sourceType": "module"
-      },
-      "globals": {
-        "__dirname": "readonly",
-        "__filename": "readonly",
-        "exports": "readonly",
-        "module": "readonly",
-        "require": "readonly"
-      }
-    }
-  ]
+	"extends": ["eslint:recommended"],
+	"env": {
+		"es2022": true,
+		"node": true
+	},
+	"parserOptions": {
+		"ecmaVersion": "latest"
+	},
+	"plugins": ["simple-import-sort"],
+	"rules": {
+		"simple-import-sort/imports": "error",
+		"simple-import-sort/exports": "error"
+	},
+	"overrides": [
+		{
+			"files": ["*.ts", "*.js"],
+			"parserOptions": {
+				"sourceType": "module"
+			},
+			"globals": {
+				"__dirname": "readonly",
+				"__filename": "readonly",
+				"exports": "readonly",
+				"module": "readonly",
+				"require": "readonly"
+			}
+		}
+	]
 }

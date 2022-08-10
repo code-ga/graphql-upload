@@ -1,13 +1,13 @@
-import graphqlUploadExpress from "./graphqlUploadExpress.mjs";
-import GraphQLUpload from "./GraphQLUpload.mjs";
-import graphqlUploadKoa from "./graphqlUploadKoa.mjs";
-import processRequest from "./processRequest.mjs";
-import Upload from "./Upload.mjs";
+import GraphQLUpload from './GraphQLUpload.mjs'
+import graphqlUploadExpress from './graphqlUploadExpress.mjs'
+import graphqlUploadKoa from './graphqlUploadKoa.mjs'
+import processRequest from './processRequest.mjs'
+import Upload from './Upload.mjs'
 
 export {
-  graphqlUploadExpress,
-  GraphQLUpload,
-  graphqlUploadKoa,
-  processRequest,
-  Upload,
-};
+	GraphQLUpload,
+	graphqlUploadExpress,
+	graphqlUploadKoa,
+	processRequest,
+	Upload,
+}
